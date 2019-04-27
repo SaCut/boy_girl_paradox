@@ -1,5 +1,5 @@
 # The Boy or Girl Paradox
-A small program to run a simulation of the "Boy or Girl Paradox" in a Graphic Usen Interface.
+A small program to run a simulation of the "Boy or Girl Paradox" in a Graphic User Interface.
 
 ------ DESCRIPTION ------
 The Boy or Girl Paradox (https://en.wikipedia.org/wiki/Boy_or_Girl_paradox) is an apparent paradox of statistics.
