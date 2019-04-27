@@ -110,6 +110,18 @@ def clear_simulation():
 	run.set(value=1)
 	results.config(state='disabled')
 
+def darker_bg():
+	''' returns a slightly darker colour than default background '''
+	colour = ''
+	for i in window['bg']:
+		if not i=='#':
+			colour += i
+	red = int(colour[0:2], 16) - 35
+	green = int(colour[2:4], 16) - 35
+	blue = int(colour[4:6], 16) - 35
+	darker = hex(red)[2:] + hex(green)[2:] + hex(blue)[2:]
+	return '#' + darker
+
 
 #----- WINDOW CONTENTS -----
 if __name__=='__main__':
@@ -117,8 +129,8 @@ if __name__=='__main__':
 	commentframe = tk.Frame(window)
 	commentframe.pack(side='top', pady=15, padx=22, fill='x')
 
-	comment = wrap_label(commentframe, text='This program will perform a simulation of the famous \'Boy or Girl Paradox\'.\nThe paradox goes, a stranger at a bar tells you that she has two children, at least one of which is female.\nIt can be somewhat counterintuitive that the odds of this daughter having a male brother are 66%, given the information we have. The really surprising figure though, is that right after the stranger tells us the name of her daughter, the odds of the girl having a male brother immediately become to 50%.\nI could\'t cope with this mind-bender, and so made this little program that simulates rows upon rows of randomised pairs of siblings, and then counts the odds one by one.\nTurns out people who dedicate the best part of their lives to the study of statistics know what they\'re talking about.\n    Check it out for yourself.')
-	comment.config(fg='#222222', font=('Default', 8), wraplength=comment.winfo_reqwidth(), justify='left', relief='flat', height=9, width=45)
+	comment = wrap_label(commentframe, text='This program demonstrates the claims of the famous "Boy or Girl Paradox" by simulating rows upon rows of randomised pairs of siblings, finding the ones which contain at least one girl, and then counting the odds of the other sibling being male.\n\nCheck it out for yourself.')
+	comment.config(fg='#222222', bg=darker_bg(), font=('Default', 9), wraplength=comment.winfo_reqwidth(), justify='left', relief='flat', height=4, width=45)
 	comment.pack(fill='x', expand=True)
 
 	''' Root '''
@@ -138,7 +150,7 @@ if __name__=='__main__':
 	Chosen_name = ttk.Combobox(top_left, values=lists_o_stuff.girl_names, state='readonly', textvariable=name)
 	Chosen_name.current(0)
 	Chosen_name.bind("<<ComboboxSelected>>", update_text)
-	Chosen_name.pack(anchor='w', pady=18, padx=25)
+	Chosen_name.pack(anchor='w', pady=24, padx=25)
 
 	top_right = tk.Frame(select_girl_name)
 	top_right.pack(side='right', fill='x', expand=True, padx=10)
@@ -150,8 +162,8 @@ if __name__=='__main__':
 	families = tk.Spinbox(top_right, relief='sunken', state='readonly', values=lists_o_stuff.numeros)
 	families.pack(side='left', pady=5)
 
-	warning = wrap_label(top_right, text='A word of advice.\nBelow 1000 families the name you chose may not appear, and above 100,000 families the simulation may take a long time', wrap=200, justify='left', height=4)
-	warning.config(font=("Default", 8), fg='gray')
+	warning = wrap_label(top_right, text='A word of advice.\nBelow 1000 families the name you chose may not appear, and above 100,000 families the simulation may take a long time', wrap=200, justify='left', height=5)
+	warning.config(font=("Default", 8), fg='#222222', bg=darker_bg())
 	warning.pack(anchor='w', fill='x', expand=True, padx=10)
 
 	''' Flags '''
