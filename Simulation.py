@@ -79,15 +79,15 @@ def run_simulation():
 	# Output
 	results.config(state='normal')
 
-	results.insert('end', f'Simulation #{run.get()}. Over {int(families.get()):,} pairs of siblings:\n')
+	results.insert('end', 'Simulation #{}. Over {:,} pairs of siblings:\n'.format(run.get(), int(families.get())))
 	try:
-		result_sis = int(bro/sis * 100) 
-		results.insert('end', '- For the {} girls we found, the odds of a male brother were: {}%.\n'.format(sis, result_sis))
+		result_sis = bro/sis * 100
+		results.insert('end', '- For the {} girls we found, the odds of a male brother were: {:.2f}%.\n'.format(sis, result_sis))
 	except ZeroDivisionError:
 		results.insert('end', '- We aren\'t checking the odds for all girls.\n')
 	try:
-		result_named_sis = int(named_sis_bro/named_sis * 100)
-		results.insert('end', '- For the {} \'{}\' we found, the odds of a male brother were: {}%.\n'.format(named_sis, Chosen_name.get(), result_named_sis))
+		result_named_sis = named_sis_bro/named_sis * 100
+		results.insert('end', '- For the {} \'{}\' we found, the odds of a male brother were: {:.2f}%.\n'.format(named_sis, Chosen_name.get(), result_named_sis))
 	except ZeroDivisionError:
 		results.insert('end', '- We found no children named {}. There were too many spiders.\n'.format(Chosen_name.get()))
 	timing = time_2 - time_1
