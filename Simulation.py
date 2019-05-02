@@ -8,7 +8,7 @@ from tkinter import ttk
 window = tk.Tk()
 window.title('The Boy or Girl Paradox')
 window.geometry('850x600')
-window.minsize(770, 540)
+window.minsize(800, 540)
 
 ''' Flags '''
 simulate_for_girls = tk.BooleanVar(value=True)
@@ -56,16 +56,13 @@ def Pairs_of_children():
 	return(Pairs)
 
 def run_simulation():
-	''' Init '''
-	sis = 0
-	bro = 0
-	named_sis = 0
-	named_sis_bro = 0
-	result_sis = 0
-	result_named_sis = 0
+	''' Now to run the simulation. '''
+	# Init
+	sis, bro, named_sis, named_sis_bro = 0, 0, 0, 0
+	result_sis, result_named_sis = 0, 0
 	time_1 = time.time()
 
-	''' Now to run the simulation. '''
+	# add brothers and sisters of what we're checking, then divide them to find the percentage
 	for firstborn, secondborn in Pairs_of_children():
 		if simulate_for_girls.get():
 			if firstborn.isFemale or secondborn.isFemale:
@@ -79,7 +76,7 @@ def run_simulation():
 					named_sis_bro += 1
 	time_2 = time.time()
 
-	''' Output '''
+	# Output
 	results.config(state='normal')
 
 	results.insert('end', f'Simulation #{run.get()}. Over {int(families.get()):,} pairs of siblings:\n')
@@ -101,10 +98,12 @@ def run_simulation():
 	results.config(state='disabled')
 
 def update_text(event):
+	''' Update girl's name in the checkbox description according to the user's choiche '''
 	check_name.config(text="Check the odds of a male brother for a girl named {}.".format(Chosen_name.get()))
 	pass
 
 def clear_simulation():
+	''' Clear the results at the press of a button '''
 	results.config(state='normal')
 	results.delete('1.0', 'end')
 	run.set(value=1)
@@ -125,7 +124,7 @@ def darker_bg():
 
 #----- WINDOW CONTENTS -----
 if __name__=='__main__':
-	''' Comment '''
+	# Comment
 	commentframe = tk.Frame(window)
 	commentframe.pack(side='top', pady=15, padx=22, fill='x')
 
@@ -133,11 +132,11 @@ if __name__=='__main__':
 	comment.config(fg='#222222', bg=darker_bg(), font=('Default', 9), wraplength=comment.winfo_reqwidth(), justify='left', relief='flat', height=4, width=45)
 	comment.pack(fill='x', expand=True)
 
-	''' Root '''
+	# Root
 	frame = tk.Frame(window)
 	frame.pack(side='top', fill='both', expand=True, padx=50)
 
-	''' Select name '''
+	# Select name
 	select_girl_name = tk.Frame(frame)
 	select_girl_name.pack(side='top', fill="both")
 
@@ -155,25 +154,25 @@ if __name__=='__main__':
 	top_right = tk.Frame(select_girl_name)
 	top_right.pack(side='right', fill='x', expand=True, padx=10)
 
-	''' Select families '''
+	# Select families
 	families_label = tk.Label(top_right, text='Choose the number of pairs of siblings to simulate:', fg='#2C2C2C')
 	families_label.pack(anchor='nw')
 
 	families = tk.Spinbox(top_right, relief='sunken', state='readonly', values=lists_o_stuff.numeros)
 	families.pack(side='left', pady=5)
 
-	warning = wrap_label(top_right, text='A word of advice.\nBelow 1000 families the name you chose may not appear, and above 100,000 families the simulation may take a long time', wrap=200, justify='left', height=5)
+	warning = wrap_label(top_right, text='A word of advice.\nBelow 10,000 families the name you chose may not appear, and above 100,000 families the simulation may take a long time', wrap=200, justify='left', height=5)
 	warning.config(font=("Default", 8), fg='#222222', bg=darker_bg())
 	warning.pack(anchor='w', fill='x', expand=True, padx=10)
 
-	''' Flags '''
+	# Flags
 	checkboxes = tk.Frame(frame)
 	checkboxes.pack(side='top', fill='both', pady=10)
 
 	phrase = tk.Label(checkboxes, text='What do you want to check?', fg='#2C2C2C')
 	phrase.pack(anchor='w')
 
-	''' Checkboxes '''
+	# Checkboxes
 	flagframe = tk.Frame(checkboxes)
 	flagframe.pack(fill='both', pady=10)
 
@@ -186,7 +185,7 @@ if __name__=='__main__':
 	diff_names = tk.Checkbutton(flagframe, text="Ensure two siblings won't have the same name, because that's lazy parenting.", variable=diff_names_only, onvalue=True, offvalue=False, fg='#2C2C2C')
 	diff_names.pack(anchor='w')
 
-	''' Simulation '''
+	# Simulation
 	simulationframe = tk.Frame(frame)
 	simulationframe.pack(side='bottom', fill='both', expand=True, pady=10)
 
@@ -209,5 +208,5 @@ if __name__=='__main__':
 	sidebar.pack(side='right', fill='y')
 	results.config(yscrollcommand=sidebar.set)
 
-	''' Window loop '''
+	# Window loop
 	window.mainloop()
